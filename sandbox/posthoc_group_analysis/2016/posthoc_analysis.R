@@ -117,6 +117,26 @@ dev.off()
 
 # Recreate "dots" image 
 
+l <- list()
+t <- list()
+for (i in 1:4){
+    temp <- hyb_by_mon_posthoc %>% filter(group==i)
+    temp <- apply(temp[5:25],2,summary)
+    t[[i]] <- temp
+    data <- data %>% select(ID, Min = Min., Median, Max = Max.)
+    df <- melt(data ,  id.vars = 'ID', variable.name = 'series')
+    p <- ggplot(df, aes(ID,value)) + geom_point(aes(color=series, size = 10), show.legend = FALSE) + labs(title = paste("Scaled Weather Profile for Group",i,sep = " ")) +
+        scale_x_continuous(breaks = c(1:19), labels = names(weeks3_5Groups[,c(6:13,15:25)])) + theme_bw() +
+        theme(axis.text.x = element_text(face="bold", size=6, angle=45,margin = margin(t = 10)), axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title = element_blank())
+    l[[i]] <- p
+    rm(t[[i]])
+}
+
+#pdf("profileByGroup.pdf", paper = "a4r")
+grid.arrange(l[[1]],l[[2]],l[[4]],l[[5]],l[[6]],l[[7]],l[[8]],l[[9]], ncol = 2)
+#dev.off()
+
+
 
 # Now, we would like to get a better feel of the data, such as the composition of the groups 
 # and how the hybrids interact in each cluster/group
