@@ -6,6 +6,7 @@ library(lubridate)
 library(gridExtra)
 library(viridis)
 library(tidyverse)
+library(reshape2)
 library(PReMiuM)
 
 setwd("/Users/banks/RProjects/EnviroTyping/sandbox/shifted_data_analysis/2016")
@@ -115,26 +116,35 @@ ggplot(hyb_by_mon_interest,aes(x = factor(Pedi,level = c("2369/3IIH6","2FACC/3II
     theme(axis.text.x = element_text(angle=45,hjust=1), plot.title = element_text(hjust = 0.5))
 dev.off()
 
-# Recreate "dots" image 
+# Recreate "dots" image; need to identify "ID" and the difference between figure with groups' months all in one figure
+# and group with weather variables on separate pages
+
+# This first image gives an overview of how each grouping deals with the weather variables.
+# Notice the last three groups have variables without dots; this is because they have missing values.
+# Variables are scaled for readability.
 
 l <- list()
 t <- list()
 for (i in 1:4){
     temp <- hyb_by_mon_posthoc %>% filter(group==i)
-    temp <- apply(temp[5:25],2,summary)
+    temp <- apply(temp[6:25],2,summary)
     t[[i]] <- temp
+    data <- rowid_to_column(as.tibble(t(scale(temp))), "ID")
     data <- data %>% select(ID, Min = Min., Median, Max = Max.)
-    df <- melt(data ,  id.vars = 'ID', variable.name = 'series')
-    p <- ggplot(df, aes(ID,value)) + geom_point(aes(color=series, size = 10), show.legend = FALSE) + labs(title = paste("Scaled Weather Profile for Group",i,sep = " ")) +
-        scale_x_continuous(breaks = c(1:19), labels = names(weeks3_5Groups[,c(6:13,15:25)])) + theme_bw() +
-        theme(axis.text.x = element_text(face="bold", size=6, angle=45,margin = margin(t = 10)), axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title = element_blank())
+    df <- melt(data ,  id.vars = 'ID', variable.name = 'statistic')
+    p <- ggplot(df, aes(ID,value)) + 
+        geom_point(aes(color=statistic), size = 5, show.legend = TRUE, position = "jitter") + 
+        labs(title = paste("Scaled Weather Profile for Group",i,sep = " ")) +
+        scale_x_continuous(breaks = c(1:20), labels = names(hyb_by_mon_posthoc[,c(6:25)])) + 
+        theme_bw() +
+        theme(axis.text.x = element_text(face="bold", size=6, angle=45, hjust = 1), 
+              axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title = element_blank(), plot.title = element_text(hjust = 0.5)) 
     l[[i]] <- p
-    rm(t[[i]])
 }
 
-#pdf("profileByGroup.pdf", paper = "a4r")
-grid.arrange(l[[1]],l[[2]],l[[4]],l[[5]],l[[6]],l[[7]],l[[8]],l[[9]], ncol = 2)
-#dev.off()
+png("../../working_with_plots/BanksPlots/Figures/GroupProfiles.png", width = 1280, height = 1080)
+grid.arrange(l[[1]],l[[2]],l[[3]],l[[4]], ncol = 2)
+dev.off()
 
 
 
