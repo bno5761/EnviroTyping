@@ -58,3 +58,17 @@ Week of 26 April 2019
 Week of 24 May 2019:
   - Completed post hoc analysis workflow on Envirotyping RtD
   - Finished troubleshooting vQTL Random RtD, so documentation can finally be built without error
+  - Created Shiny app to visualize yield distributions by hybrid
+  - Met with team from out of town to discuss direction of project
+  
+Week of 31 May 2019:
+  - Completed Shiny app and debugged errors
+  - Uploaded app to RStudio's servers
+  - Attempt workflow analysis with NAs instead of -999
+    - Yields more PH groups
+
+Week of 7 June 2019:
+  - Researched utility of hideable comments in RtD (cost does not outweigh benefits)
+  - Established ```match``` commands at end of Dave's PHA file does not provide much benefit to current work
+  - Clarified the number of post hoc groups should be lesser than the number of PReMiuM clusters
+  - Started new Shiny app to visualize group weather profiles
