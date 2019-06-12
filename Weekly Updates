@@ -72,3 +72,13 @@ Week of 7 June 2019:
   - Established ```match``` commands at end of Dave's PHA file does not provide much benefit to current work
   - Clarified the number of post hoc groups should be lesser than the number of PReMiuM clusters
   - Started new Shiny app to visualize group weather profiles
+  - Identify ideal number of post-hoc groups (definitely less than the number of PReMiuM clusters)
+  - Begin Shiny app that shows weather profiles
+    - Finish UI
+    - Got server-side working
+    - Need to identify how to produce multiple figures
+
+Week of 14 June 2019:
+  - Identify source of -999 in post-hoc groups
+  - Research how to split dataframes in list, produce multiple figures, etc
+  - Debug
