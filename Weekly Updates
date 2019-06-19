@@ -82,3 +82,13 @@ Week of 14 June 2019:
   - Identify source of -999 in post-hoc groups
   - Research how to split dataframes in list, produce multiple figures, etc
   - Debug
+  - Research possibible fixes for recreating static weather profile figures
+  
+Week of 21 June 2019:
+  - Continued work on weather profile app
+    - Fix normalization errors
+    - Identified anomaly that scaling is thrown off when treating -999s as 0 with min-max and standardization
+    - Wrote note in Shiny app UI that says to change -999s only when looking at levels
+  - Helped get Morgan started to help me identify issue with plotting static weather profile figure
+  - Consulted with Austin about advantages of using PReMiuM for poster
+  - Consulted with vQTL group about possible modeling issues with interaction effects
